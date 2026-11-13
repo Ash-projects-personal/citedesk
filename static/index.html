@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CiteDesk, NorthPeak Home support</title>
+<style>
+  :root { --ink:#16211c; --mut:#5a6b62; --line:#d8e2dc; --good:#177245; --warn:#b3541e; --bg:#f4f7f5; --card:#ffffff; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--ink); }
+  header { background:#0f3d2e; color:#fff; padding:18px 22px; }
+  header h1 { margin:0; font-size:22px; }
+  header p { margin:4px 0 0; font-size:13px; opacity:.85; }
+  main { max-width: 880px; margin: 0 auto; padding: 18px; display:grid; grid-template-columns: 1fr 320px; gap:16px; }
+  @media (max-width: 760px){ main{ grid-template-columns: 1fr; } }
+  .card { background: var(--card); border:1px solid var(--line); border-radius:10px; padding:14px; }
+  h2 { font-size:15px; margin:0 0 10px; }
+  label { font-size:12px; color:var(--mut); display:block; margin:8px 0 3px; }
+  input, select { width:100%; padding:8px; border:1px solid var(--line); border-radius:6px; font-size:14px; }
+  button { background:#0f3d2e; color:#fff; border:0; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; }
+  button.alt { background:#e7efe9; color:#0f3d2e; border:1px solid var(--line); }
+  button:hover { opacity:.92; }
+  #log { display:flex; flex-direction:column; gap:10px; min-height:200px; }
+  .msg { padding:10px 12px; border-radius:10px; font-size:14px; line-height:1.45; }
+  .user { background:#e8f1ec; align-self:flex-end; max-width:85%; }
+  .botmsg { background:#fbfcfb; border:1px solid var(--line); align-self:flex-start; max-width:92%; }
+  .chips { margin-top:8px; display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+  .chip { background:#eef4f0; border:1px solid var(--line); border-radius:20px; padding:2px 9px; font-size:11px; color:#0f3d2e; }
+  .score { font-size:11px; font-weight:600; }
+  .meter { height:6px; background:#e5ece7; border-radius:3px; width:130px; display:inline-block; vertical-align:middle; }
+  .meter i { display:block; height:6px; border-radius:3px; background:var(--good); }
+  .esc { border-color:#eccdb8; background:#fffaf6; }
+  .choices { margin-top:8px; display:flex; flex-direction:column; gap:6px; }
+  .choices button { text-align:left; }
+  #askrow { display:flex; gap:8px; margin-top:12px; }
+  #askrow input { flex:1; }
+  #brief { font-size:13px; line-height:1.5; }
+  #brief .empty { color:var(--mut); }
+  #brief h3 { margin:10px 0 4px; font-size:13px; }
+  #brief ul { margin:4px 0 8px 16px; padding:0; }
+  .tag { font-size:11px; color:var(--warn); font-weight:700; letter-spacing:.04em; }
+  .small { font-size:12px; color:var(--mut); }
+</style>
+</head>
+<body>
+<header>
+  <h1>CiteDesk</h1>
+  <p>Support for NorthPeak Home that shows its proof. Every answer cites the help article it came from. If it cannot prove an answer, it hands off to a human instead of guessing.</p>
+</header>
+<main>
+  <section class="card">
+    <div id="prechat">
+      <h2>Before we chat</h2>
+      <label>Your name</label>
+      <input id="pc-name" placeholder="First name">
+      <label>Product</label>
+      <select id="pc-product">
+        <option>NorthPeak Hub</option><option>Doorbell Camera</option>
+        <option>Thermostat</option><option>Smart Lock</option><option>Something else</option>
+      </select>
+      <label>What is this about?</label>
+      <select id="pc-topic">
+        <option>Setup or connection</option><option>Order, shipping or returns</option>
+        <option>Billing</option><option>Warranty</option><option>Account or privacy</option>
+      </select>
+      <p><button id="pc-start">Start chat</button></p>
+      <p class="small">This quick form routes your question and is saved with any handoff brief, so a human starts with context.</p>
+    </div>
+    <div id="chat" style="display:none">
+      <div id="log"></div>
+      <div id="askrow">
+        <input id="q" placeholder="Ask a support question...">
+        <button id="send">Ask</button>
+      </div>
+      <p>
+        <button class="alt" id="flow-wifi">Help: device will not connect to WiFi</button>
+        <button class="alt" id="flow-return">Start a return</button>
+      </p>
+    </div>
+  </section>
+  <aside class="card">
+    <h2>Human handoff brief</h2>
+    <div id="brief"><span class="empty">Nothing has been escalated yet. When CiteDesk cannot prove an answer, the brief for the human agent appears here, with the question, the closest articles, and what the agent needs.</span></div>
+  </aside>
+</main>
+<script>
+let session = null;
+const log = document.getElementById('log');
+const briefBox = document.getElementById('brief');
+
+function addMsg(cls, html) {
+  const d = document.createElement('div');
+  d.className = 'msg ' + cls;
+  d.innerHTML = html;
+  log.appendChild(d);
+  d.scrollIntoView({behavior:'smooth'});
+  return d;
+}
+function esc(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+
+function showBrief(b) {
+  let html = '<span class="tag">ESCALATED TO A HUMAN</span>';
+  html += '<h3>Question</h3><div>' + esc(b.question) + '</div>';
+  html += '<h3>Why it escalated</h3><div>' + esc(b.reason) + '</div>';
+  if (b.closest_matches && b.closest_matches.length) {
+    html += '<h3>Closest articles</h3><ul>' + b.closest_matches.map(m => '<li>' + esc(m.article) + ' (score ' + m.score + ')</li>').join('') + '</ul>';
+  }
+  html += '<h3>What the human needs</h3><ul>' + b.what_the_human_needs.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>';
+  html += '<h3>Contact options</h3><ul>' + b.contact_options.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>';
+  briefBox.innerHTML = html;
+}
+
+async function post(path, data) {
+  const r = await fetch(path, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)});
+  return r.json();
+}
+
+async function ask() {
+  const input = document.getElementById('q');
+  const q = input.value.trim();
+  if (!q) return;
+  input.value = '';
+  addMsg('user', esc(q));
+  const res = await post('/api/ask', {question: q});
+  if (res.type === 'answer') {
+    let html = esc(res.answer);
+    html += '<div class="chips">' + res.citations.map(c => '<span class="chip">Source: ' + esc(c) + '</span>').join('');
+    html += '<span class="score">Groundedness ' + res.groundedness + '/100</span><span class="meter"><i style="width:' + res.groundedness + '%"></i></span></div>';
+    addMsg('botmsg', html);
+  } else {
+    addMsg('botmsg esc', 'I cannot prove an answer to that from the NorthPeak help articles, so I will not guess. I have written a handoff brief for a human agent. It is on the right of this page.');
+    showBrief(res.brief);
+  }
+}
+
+function renderStep(view) {
+  let html = esc(view.text);
+  html += '<div class="chips"><span class="chip">Guided by: ' + esc(view.cite) + '</span>';
+  if (view.outcome === 'resolved') html += '<span class="chip">Resolved</span>';
+  if (view.action) html += '<span class="chip">Action taken: ' + esc(view.action) + (view.rma ? ' (' + esc(view.rma) + ')' : '') + '</span>';
+  html += '</div>';
+  if (view.choices && view.choices.length) {
+    html += '<div class="choices">' + view.choices.map((c, i) => '<button class="alt" data-i="' + i + '">' + esc(c) + '</button>').join('') + '</div>';
+  }
+  const d = addMsg('botmsg', html);
+  d.querySelectorAll('button').forEach(btn => btn.onclick = async () => {
+    addMsg('user', esc(btn.textContent));
+    const next = await post('/api/flow/choose', {session: session, choice: parseInt(btn.dataset.i)});
+    if (next.brief) {
+      renderStep(next);
+      showBrief(next.brief);
+    } else {
+      renderStep(next);
+    }
+  });
+}
+
+async function startFlow(flow) {
+  const view = await post('/api/flow/start', {flow: flow});
+  session = view.session;
+  addMsg('botmsg', '<strong>' + esc(view.flow_name) + '</strong>');
+  renderStep(view);
+}
+
+document.getElementById('pc-start').onclick = () => {
+  document.getElementById('prechat').style.display = 'none';
+  document.getElementById('chat').style.display = 'block';
+  const name = document.getElementById('pc-name').value.trim();
+  addMsg('botmsg', 'Hi' + (name ? ' ' + esc(name) : '') + '. Ask me anything about NorthPeak Home products, orders, returns, or billing. Every answer I give shows the article it came from. You can also start a guided flow with the buttons below.');
+};
+document.getElementById('send').onclick = ask;
+document.getElementById('q').addEventListener('keydown', e => { if (e.key === 'Enter') ask(); });
+document.getElementById('flow-wifi').onclick = () => startFlow('wifi');
+document.getElementById('flow-return').onclick = () => startFlow('return');
+</script>
+</body>
+</html>

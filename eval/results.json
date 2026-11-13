@@ -1,0 +1,312 @@
+{
+  "stats": {
+    "answer_ok": 24,
+    "answer_wrong": 0,
+    "escalate_ok": 5,
+    "escalate_missed": 1,
+    "total": 30,
+    "correct": 29
+  },
+  "rows": [
+    {
+      "q": "How long does standard shipping take?",
+      "expect": "answer",
+      "expected_article": "Shipping times and costs",
+      "got": "answer",
+      "top_citation": "Shipping times and costs",
+      "groundedness": 74,
+      "evidence_score": 14.23,
+      "correct": true
+    },
+    {
+      "q": "Is shipping free on a 60 dollar order?",
+      "expect": "answer",
+      "expected_article": "Shipping times and costs",
+      "got": "answer",
+      "top_citation": "Shipping times and costs",
+      "groundedness": 79,
+      "evidence_score": 18.91,
+      "correct": true
+    },
+    {
+      "q": "Where is my order? I never got a tracking link.",
+      "expect": "answer",
+      "expected_article": "Tracking your order",
+      "got": "answer",
+      "top_citation": "Tracking your order",
+      "groundedness": 75,
+      "evidence_score": 14.89,
+      "correct": true
+    },
+    {
+      "q": "How many days do I have to return something?",
+      "expect": "answer",
+      "expected_article": "Returns policy",
+      "got": "answer",
+      "top_citation": "Returns policy",
+      "groundedness": 65,
+      "evidence_score": 9.32,
+      "correct": true
+    },
+    {
+      "q": "Do I have to pay for return shipping?",
+      "expect": "answer",
+      "expected_article": "Returns policy",
+      "got": "answer",
+      "top_citation": "Returns policy",
+      "groundedness": 70,
+      "evidence_score": 11.73,
+      "correct": true
+    },
+    {
+      "q": "How long until my refund shows up in my account?",
+      "expect": "answer",
+      "expected_article": "Refunds: timing and methods",
+      "got": "answer",
+      "top_citation": "Refunds: timing and methods",
+      "groundedness": 57,
+      "evidence_score": 6.72,
+      "correct": true
+    },
+    {
+      "q": "What does the two year warranty actually cover?",
+      "expect": "answer",
+      "expected_article": "Warranty coverage",
+      "got": "answer",
+      "top_citation": "Warranty coverage",
+      "groundedness": 71,
+      "evidence_score": 12.3,
+      "correct": true
+    },
+    {
+      "q": "How do I file a warranty claim for a broken device?",
+      "expect": "answer",
+      "expected_article": "How to file a warranty claim",
+      "got": "answer",
+      "top_citation": "How to file a warranty claim",
+      "groundedness": 84,
+      "evidence_score": 25.95,
+      "correct": true
+    },
+    {
+      "q": "How do I set up the NorthPeak Hub?",
+      "expect": "answer",
+      "expected_article": "Setting up your NorthPeak Hub",
+      "got": "answer",
+      "top_citation": "Setting up your NorthPeak Hub",
+      "groundedness": 68,
+      "evidence_score": 10.6,
+      "correct": true
+    },
+    {
+      "q": "Does the doorbell work on a 5 GHz network?",
+      "expect": "answer",
+      "expected_article": "Connecting a device to WiFi",
+      "got": "answer",
+      "top_citation": "Connecting a device to WiFi",
+      "groundedness": 79,
+      "evidence_score": 19.0,
+      "correct": true
+    },
+    {
+      "q": "My camera will not connect to WiFi, what should I try?",
+      "expect": "answer",
+      "expected_article": "Device will not connect to WiFi",
+      "got": "answer",
+      "top_citation": "Device will not connect to WiFi",
+      "groundedness": 75,
+      "evidence_score": 14.82,
+      "correct": true
+    },
+    {
+      "q": "How long does the doorbell camera battery last?",
+      "expect": "answer",
+      "expected_article": "Doorbell camera battery and charging",
+      "got": "answer",
+      "top_citation": "Doorbell camera battery and charging",
+      "groundedness": 82,
+      "evidence_score": 23.49,
+      "correct": true
+    },
+    {
+      "q": "How long does charging the doorbell battery take?",
+      "expect": "answer",
+      "expected_article": "Doorbell camera battery and charging",
+      "got": "answer",
+      "top_citation": "Doorbell camera battery and charging",
+      "groundedness": 80,
+      "evidence_score": 20.17,
+      "correct": true
+    },
+    {
+      "q": "What do I need to know before installing the thermostat?",
+      "expect": "answer",
+      "expected_article": "Thermostat installation basics",
+      "got": "answer",
+      "top_citation": "Thermostat installation basics",
+      "groundedness": 76,
+      "evidence_score": 15.5,
+      "correct": true
+    },
+    {
+      "q": "The app cannot find my device when I try to pair it.",
+      "expect": "answer",
+      "expected_article": "Pairing a device in the NorthPeak app",
+      "got": "answer",
+      "top_citation": "Pairing a device in the NorthPeak app",
+      "groundedness": 80,
+      "evidence_score": 19.56,
+      "correct": true
+    },
+    {
+      "q": "I forgot my password, how do I get back into my account?",
+      "expect": "answer",
+      "expected_article": "Your account: sign in and password help",
+      "got": "answer",
+      "top_citation": "Your account: sign in and password help",
+      "groundedness": 74,
+      "evidence_score": 13.93,
+      "correct": true
+    },
+    {
+      "q": "How much is the NorthPeak Protect plan per month?",
+      "expect": "answer",
+      "expected_article": "NorthPeak Protect plan and billing",
+      "got": "answer",
+      "top_citation": "NorthPeak Protect plan and billing",
+      "groundedness": 76,
+      "evidence_score": 16.06,
+      "correct": true
+    },
+    {
+      "q": "How do I update the credit card you charge me on?",
+      "expect": "answer",
+      "expected_article": "Changing your payment method",
+      "got": "answer",
+      "top_citation": "Changing your payment method",
+      "groundedness": 67,
+      "evidence_score": 9.99,
+      "correct": true
+    },
+    {
+      "q": "Do you sell my personal data to anyone?",
+      "expect": "answer",
+      "expected_article": "Privacy and your data",
+      "got": "answer",
+      "top_citation": "Privacy and your data",
+      "groundedness": 79,
+      "evidence_score": 19.07,
+      "correct": true
+    },
+    {
+      "q": "How do I factory reset my device?",
+      "expect": "answer",
+      "expected_article": "Factory reset a device",
+      "got": "answer",
+      "top_citation": "Factory reset a device",
+      "groundedness": 79,
+      "evidence_score": 18.49,
+      "correct": true
+    },
+    {
+      "q": "How do firmware updates work on my devices?",
+      "expect": "answer",
+      "expected_article": "Firmware updates",
+      "got": "answer",
+      "top_citation": "Firmware updates",
+      "groundedness": 77,
+      "evidence_score": 17.09,
+      "correct": true
+    },
+    {
+      "q": "What hours is phone support open?",
+      "expect": "answer",
+      "expected_article": "Contacting NorthPeak support",
+      "got": "answer",
+      "top_citation": "Contacting NorthPeak support",
+      "groundedness": 62,
+      "evidence_score": 8.24,
+      "correct": true
+    },
+    {
+      "q": "What is the weather forecast for tomorrow?",
+      "expect": "escalate",
+      "expected_article": null,
+      "got": "escalation",
+      "top_citation": null,
+      "groundedness": null,
+      "evidence_score": null,
+      "correct": true
+    },
+    {
+      "q": "Can you recommend a good electrician near me?",
+      "expect": "escalate",
+      "expected_article": null,
+      "got": "escalation",
+      "top_citation": null,
+      "groundedness": null,
+      "evidence_score": null,
+      "correct": true
+    },
+    {
+      "q": "Does NorthPeak sell solar panels or EV chargers?",
+      "expect": "escalate",
+      "expected_article": null,
+      "got": "escalation",
+      "top_citation": null,
+      "groundedness": null,
+      "evidence_score": null,
+      "correct": true
+    },
+    {
+      "q": "What is your stock price today?",
+      "expect": "escalate",
+      "expected_article": null,
+      "got": "escalation",
+      "top_citation": null,
+      "groundedness": null,
+      "evidence_score": null,
+      "correct": true
+    },
+    {
+      "q": "I want to sue NorthPeak over my broken doorbell, who is your lawyer?",
+      "expect": "escalate",
+      "expected_article": null,
+      "got": "escalation",
+      "top_citation": null,
+      "groundedness": null,
+      "evidence_score": null,
+      "correct": true
+    },
+    {
+      "q": "Will the doorbell camera work under water if I mount it by my pool?",
+      "expect": "escalate",
+      "expected_article": null,
+      "got": "answer",
+      "top_citation": "Doorbell camera battery and charging",
+      "groundedness": 75,
+      "evidence_score": 15.41,
+      "correct": false
+    },
+    {
+      "q": "My order arrived damaged yesterday, can I return it within the window?",
+      "expect": "answer",
+      "expected_article": "Returns policy",
+      "got": "answer",
+      "top_citation": "Returns policy",
+      "groundedness": 66,
+      "evidence_score": 9.54,
+      "correct": true
+    },
+    {
+      "q": "Can I get a refund for a final sale item I bought 45 days ago?",
+      "expect": "answer",
+      "expected_article": "Returns policy",
+      "got": "answer",
+      "top_citation": "Returns policy",
+      "groundedness": 82,
+      "evidence_score": 23.01,
+      "correct": true
+    }
+  ]
+}

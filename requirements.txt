@@ -1,0 +1,4 @@
+# CiteDesk runs on the Python standard library only.
+# Nothing to install for the app itself.
+# The test suite needs pytest:
+#   python3 -m venv .venv && .venv/bin/pip install pytest
